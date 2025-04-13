@@ -9,26 +9,49 @@ import SwiftUI
 import Foundation
 
 struct ContentView: View {
-    @State private var cityName: String = ""
+    @State private var city: String = ""
+    
+    @ObservedObject var weatherViewModel = WeatherViewModel()
+    
+    private let weatherService = WeatherService()
     var body: some View {
         VStack {
             Text("Enter a City Name to get started!")
                 .padding()
                 .font(.title)
-            TextField(text: $cityName, prompt: Text("Type City Name here!")){
+            TextField(text: $city, prompt: Text("Type City Name here!")){
                 Text("City Name")
             }
             .font(.title2)
             .textFieldStyle(.roundedBorder)
-                .padding(.horizontal)
-//            Button(action: apiCall){
-//                Label("Look up!", systemImage: "arrow.up")
+            .padding(.horizontal)
+            Button(action: {
+                weatherViewModel.fetchWeather(city: city) // Call the ViewModel's method
+            }) {
+                Label("Get Weather Data", systemImage: "arrow.down")
             }
-        .padding(.bottom, 450)
+            .padding()
+            
+            if let weather = weatherViewModel.weather {
+                Text("Weather in \(weather.name)")
+                    .font(.title)
+                    .padding()
+                
+                Text("Temperature: \(weather.main.temp, specifier: "%.1f")°C")
+                    .font(.headline)
+                    .padding()
+                
+                Text(weather.weather.first?.description.capitalized ?? "")
+                    .font(.subheadline)
+            }
+        }
+
+            .padding(.bottom, 300)
         }
         
-    
+        
     }
+
 
 
 #Preview {
