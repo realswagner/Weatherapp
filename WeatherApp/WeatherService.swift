@@ -10,12 +10,12 @@ import Foundation
 import Combine
 
 private enum APIKEY {
-    static let key = "85a4a421167ca30b9e47cd268efcc253"
+    static let key = "85a4a421167ca30b9e47cd268efcc253" //private API key
 }
 
 class WeatherService{
     
-    private let baseURL = "https://api.openweathermap.org/data/2.5/weather"
+    private let baseURL = "https://api.openweathermap.org/data/2.5/weather" //base API url
     
     func getWeather(for city: String) -> AnyPublisher<WeatherResponse, Error> {
         guard let url = URL(string: "\(baseURL)?q=\(city)&appid=\(APIKEY.key)&units=metric") else {

@@ -8,6 +8,7 @@
 import Foundation
 
 import Combine
+import SwiftUI
 
 class WeatherViewModel: ObservableObject {
     
@@ -22,5 +23,24 @@ class WeatherViewModel: ObservableObject {
             .sink(receiveCompletion: { _ in },
                   receiveValue: { weather in
                 self.weather = weather })
+    }
+    
+    var iconCode: String? {
+            return weather?.weather.first?.icon
+        }
+}
+
+struct WeatherIconView: View {
+    let iconCode: String
+
+    var body: some View {
+        AsyncImage(url: URL(string: "https://openweathermap.org/img/wn/\(iconCode)@2x.png")) { image in
+            image
+                .resizable()
+                .aspectRatio(contentMode: .fit)
+                .frame(width: 100, height: 100)
+        } placeholder: {
+            ProgressView() // loading
+        }
     }
 }

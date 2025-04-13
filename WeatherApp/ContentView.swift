@@ -32,6 +32,10 @@ struct ContentView: View {
             }
             .padding()
             
+            if let iconCode = weatherViewModel.iconCode {
+                            WeatherIconView(iconCode: iconCode)
+                        }
+            
             if let weather = weatherViewModel.weather {
                 Text("Weather in \(weather.name)")
                     .font(.title)
