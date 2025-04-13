@@ -6,18 +6,30 @@
 //
 
 import SwiftUI
+import Foundation
 
 struct ContentView: View {
+    @State private var cityName: String = ""
     var body: some View {
         VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
+            Text("Enter a City Name to get started!")
+                .padding()
+                .font(.title)
+            TextField(text: $cityName, prompt: Text("Type City Name here!")){
+                Text("City Name")
+            }
+            .font(.title2)
+            .textFieldStyle(.roundedBorder)
+                .padding(.horizontal)
+//            Button(action: apiCall){
+//                Label("Look up!", systemImage: "arrow.up")
+            }
+        .padding(.bottom, 450)
         }
-        .padding()
+        
+    
     }
-}
+
 
 #Preview {
     ContentView()
