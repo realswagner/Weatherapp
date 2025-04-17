@@ -28,6 +28,11 @@ class WeatherViewModel: ObservableObject {
     var iconCode: String? {
             return weather?.weather.first?.icon
         }
+    var celsius: Double {
+        weather?.main.temp ?? 0.0
+    }
+
+    
 }
 
 struct WeatherIconView: View {
