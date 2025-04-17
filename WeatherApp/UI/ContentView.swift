@@ -16,6 +16,11 @@ struct ContentView: View {
     private let weatherService = WeatherService()
     var body: some View {
         VStack {
+            let temperature = weatherViewModel.weather?.main.temp ?? 0.0
+            let fahrenheit = celsiusToFahrenheit(temperature)
+            
+            let formattedTemperature = String(format: "%.1f", temperature)
+            let formattedFahrenheit = String(format: "%.1f", fahrenheit)
             Text("Enter a City Name!")
                 .padding()
                 .font(.title)
@@ -34,30 +39,35 @@ struct ContentView: View {
             .buttonStyle(.bordered)
             .padding()
             
-        
+            
             
             if let weather = weatherViewModel.weather {
                 Text("Weather in \(weather.name)")
                     .font(.title)
+                    .bold()
                     .padding()
-            if let iconCode = weatherViewModel.iconCode {
-                                WeatherIconView(iconCode: iconCode)
-                            }
-                
-                Text("Temperature: \(weather.main.temp, specifier: "%.1f")°C / \(celsiusToFahrenheit(weatherViewModel.celsius), specifier: "%.1f")°F")
-                    .font(.headline)
-                    .padding()
-                
-                Text(weather.weather.first?.description.capitalized ?? "")
-                    .font(.subheadline)
+                WeatherCardView(
+                    iconName: "thermometer.sun.fill", title: "Temperature",
+                    value: "\(formattedTemperature)°C / \(formattedFahrenheit)°F")
+                //                Text("Temperature: \(weather.main.temp, specifier: "%.1f")°C / \(celsiusToFahrenheit(weatherViewModel.celsius), specifier: "%.1f")°F")
+                //                    .font(.headline)
+                //                    .padding()
+                WeatherCardView(
+                    iconCode: weatherViewModel.iconCode, title: "Today's Forecast",
+                    value: weather.weather.first?.description.capitalized ?? "")
             }
-        }
-
-            .padding(.bottom, 300)
+            
+            //                Text(weather.weather.first?.description.capitalized ?? "")
+            //                    .font(.subheadline)
         }
         
         
+        .padding(.bottom, 100)
     }
+}
+        
+        
+    
 
 
 
